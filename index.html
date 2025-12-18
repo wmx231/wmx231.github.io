@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的精美简历 | 前端作品展示</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS 核心配置区域 --- */
+        :root {
+            /* 主题色变量：修改这里可以一键换肤 */
+            --primary-color: #2c3e50;    /* 深蓝主色 */
+            --accent-color: #1abc9c;     /* 青绿强调色 */
+            --text-dark: #34495e;        /* 深色文字 */
+            --text-light: #95a5a6;       /* 浅色文字 */
+            --bg-light: #ecf0f1;         /* 浅灰背景 */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* 卡片阴影 */
+            --section-spacing: 80px;     /* 间距统一 */
+        }
+
+        /* 全局重置与基础设置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* 原生平滑滚动 */
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* 通用工具类 */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        /* 使用伪元素制作标题下方的小装饰条 */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 入场动画定义 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-block {
+            animation: fadeInUp 0.8s ease forwards;
+            opacity: 0; /* 初始隐藏 */
+        }
+        /* 设置动画延迟，营造层次感 */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+
+        /* --- 1. 头部 Hero 区域 (使用 Flex 布局和渐变背景) --- */
+        .hero {
+            height: 90vh; /* 占据90%视口高度 */
+            background: linear-gradient(135deg, var(--primary-color), var(--text-dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 背景装饰圆圈 */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .hero-content img.avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .hero-content p.tagline {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        /* --- 2. 粘性导航栏 (Sticky Navbar) --- */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky; /* 关键属性：粘性定位 */
+            top: 0;
+            z-index: 100; /* 保证在最上层 */
+            padding: 15px 0;
+        }
+
+        .navbar ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+
+        .navbar li {
+            margin: 0 25px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s;
+        }
+
+        /* 导航链接的精美下划线动画 */
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: var(--accent-color);
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
+
+        /* --- 3. 内容区块通用卡片样式 --- */
+        .section {
+            padding: var(--section-spacing) 0;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+        
+        /* 卡片轻微悬浮效果 */
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+
+        /* --- 4. 个人介绍与技能 (Grid 布局) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 两列等宽 */
+            gap: 50px;
+            align-items: center;
+        }
+
+        .info-list p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .info-list i {
+            color: var(--accent-color);
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* 技能条样式 */
+        .skill-item { margin-bottom: 20px; }
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: var(--accent-color);
+            border-radius: 5px;
+            width: 0; /* 初始为0，由JS控制动画 */
+            transition: width 1.5s ease-in-out;
+        }
+
+
+        /* --- 5. 实习经历 - 复杂的时间轴样式 (Timeline) --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 中间的垂直线 */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #e9ecef;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        /* 左侧项目 */
+        .left { left: 0; text-align: right; }
+        /* 右侧项目 */
+        .right { left: 50%; }
+
+        /* 时间轴上的圆点 */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px; /* Adjust for left items */
+            background-color: white;
+            border: 4px solid var(--accent-color);
+            top: 25px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        .right::after { left: -10px; } /* Adjust for right items */
+
+        .timeline-content {
+            padding: 25px;
+            background: white;
+            position: relative;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .timeline-date {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .timeline-content h3 { font-size: 1.3rem; color: var(--primary-color); }
+        .timeline-content p { color: var(--text-light); font-size: 0.95rem; margin-top: 10px;}
+
+
+        /* --- 6. 获奖情况 (Flex 卡片组) --- */
+        .awards-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .award-card {
+            flex: 1 1 300px; /* 弹性宽度，最小300px */
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            border-top: 5px solid var(--accent-color); /* 顶部彩色边框 */
+            transition: all 0.3s ease;
+        }
+        .award-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .award-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        .award-card h3 { margin-bottom: 10px; color: var(--primary-color); }
+        .award-card p { color: var(--text-light); }
+
+
+        /* --- 7. 页脚与交互按钮 --- */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: var(--section-spacing);
+        }
+
+        /* 交互按钮样式 */
+        .btn-shine {
+            position: relative;
+            margin: 20px auto;
+            padding: 12px 35px;
+            border: none;
+            color: white;
+            background: var(--accent-color);
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(26, 188, 156, 0.4);
+        }
+        
+        /* 按钮光影扫过动画 */
+        .btn-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -75%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 100%);
+            transform: skewX(-25deg);
+            transition: all 0.7s;
+        }
+        .btn-shine:hover::before {
+            left: 125%;
+        }
+        .btn-shine:hover { box-shadow: 0 8px 25px rgba(26, 188, 156, 0.6); }
+
+        .contact-modal {
+            display: none; /* 默认隐藏 */
+            margin-top: 20px;
+            background: rgba(26, 188, 156, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            color: var(--primary-color);
+        }
+
+
+        /* --- 响应式适配 (Media Queries) --- */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .navbar ul { flex-direction: column; padding: 10px 0; }
+            .navbar li { margin: 10px 0; text-align: center; }
+            
+            .about-grid { grid-template-columns: 1fr; } /* 变为单列 */
+            
+            /* 时间轴在手机端的适配：变为简单垂直列表 */
+            .timeline::after { left: 31px; } /* 线条移到左侧 */
+            .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; text-align: left;}
+            .timeline-item::after { left: 21px; } /* 圆点移到左侧 */
+            .right { left: 0; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="hero" id="home">
+        <div class="hero-content animate-block">
+            <img src="https://via.placeholder.com/180" alt="个人头像" class="avatar">
+            <h1>你好，我是张三</h1>
+            <p class="tagline">热衷于创造卓越用户体验的 Web 前端开发者</p>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container">
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#about">关于我</a></li>
+                <li><a href="#experience">实习经历</a></li>
+                <li><a href="#awards">获奖情况</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="about" class="section">
+            <h2 class="section-title animate-block">关于我</h2>
+            <div class="card about-grid animate-block delay-1">
+                <div class="info-text">
+                    <h3>个人简介</h3>
+                    <p style="margin-bottom: 20px; color: var(--text-light);">大连海洋大学计算机科学与技术专业在读，对代码充满热情，具备良好的审美能力和逻辑思维。致力于编写整洁、高效的代码，并不断学习新技术。</p>
+                    <div class="info-list">
+                        <p><i class="fas fa-graduation-cap"></i> <strong>学历:</strong> 本科在读</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>坐标:</strong> 辽宁·大连</p>
+                        <p><i class="fas fa-envelope"></i> <strong>求职意向:</strong> 前端开发工程师</p>
+                    </div>
+                    <div style="text-align: center;">
+                         <button id="contactBtn" class="btn-shine">查看联系方式</button>
+                         <div id="contactInfo" class="contact-modal animate-block">
+                             <p><strong>Email:</strong> zhangsan@example.com</p>
+                             <p><strong>WeChat:</strong> frontend_dev_zs</p>
+                         </div>
+                    </div>
+                </div>
+                <div class="skills">
+                    <h3>核心技能</h3>
+                    <br>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>HTML5 / CSS3 (Sass)</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>JavaScript (ES6+)</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span>Vue.js / React</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 80%"></div></div>
+                    </div>
+                     <div class="skill-item">
+                        <div class="skill-info">
+                            <span>响应式设计 / UI UX</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress" style="width: 75%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section">
+            <h2 class="section-title animate-block">实习经历</h2>
+            <div class="timeline animate-block delay-2">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2024.06 - 2024.09</span>
+                        <h3>前端开发实习生</h3>
+                        <h4>某互联网科技有限公司</h4>
+                        <p>负责公司主站产品页面的重构工作，使用 Vue3 + TS 提升了项目的可维护性。参与了内部管理后台组件库的开发，实现了多个复杂表格组件。</p>
+                    </div>
+                </div>
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <span class="timeline-date">2023.12 - 2024.03</span>
+                        <h3>Web前端助理</h3>
+                        <h4>某创意设计工作室</h4>
+                        <p>协助团队完成客户的响应式品牌网站搭建，主要负责 HTML/CSS 静态页面还原，熟练运用 Flexbox 和 Grid 布局还原设计稿，保证了多端兼容性。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="awards" class="section">
+            <h2 class="section-title animate-block">获奖情况</h2>
+            <div class="awards-flex animate-block delay-3">
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>国家级二等奖</h3>
+                    <p>2024年全国大学生计算机设计大赛</p>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-medal"></i></div>
+                    <h3>校级一等奖学金</h3>
+                    <p>2023-2024学年专业排名前5%</p>
+                </div>
+                <div class="award-card">
+                    <div class="award-icon"><i class="fas fa-certificate"></i></div>
+                    <h3>优秀团员</h3>
+                    <p>大连海洋大学校级荣誉称号</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer animate-block">
+        <div class="container">
+            <p>© 2025 张三的个人简历. All Rights Reserved.</p>
+            <p style="font-size: 0.9rem; margin-top: 10px; opacity: 0.7;">Designed for Final Project</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- JavaScript 交互部分 ---
+
+        // 1. 简单的联系方式显示/隐藏切换
+        const contactBtn = document.getElementById('contactBtn');
+        const contactInfo = document.getElementById('contactInfo');
+
+        contactBtn.addEventListener('click', () => {
+            if (contactInfo.style.display === 'block') {
+                contactInfo.style.display = 'none';
+                contactBtn.textContent = '查看联系方式';
+            } else {
+                contactInfo.style.display = 'block';
+                contactBtn.textContent = '隐藏联系方式';
+            }
+        });
+
+        // 2. 进阶交互：滚动时触发技能条动画 (Intersection Observer API)
+        // 当技能区域进入屏幕时，才开始加载进度条动画，体验更好
+        const skillsSection = document.querySelector('.skills');
+        const progressBars = document.querySelectorAll('.progress');
+
+        function showProgress() {
+            progressBars.forEach(bar => {
+                // 获取 html 中内联样式设置的宽度值
+                const value = bar.style.width;
+                bar.style.width = 0; // 先重置为0
+                setTimeout(() => {
+                    bar.style.width = value; // 延时后设置宽度，触发CSS transition动画
+                }, 100)
+            });
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                showProgress();
+                observer.disconnect(); // 动画只触发一次
+            }
+        }, { threshold: 0.5 }); // 当元素 50% 进入视口时触发
+
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+
+        console.log("JavaScript Loaded: Interactivity ready.");
+    </script>
+</body>
+</html>
